@@ -76,7 +76,7 @@ int check_winner(int board[3][3]) {
 }
 
 int main() {
-  bool turn; // turn+1 is player number
+  bool turn = false; // turn+1 is player number
   int cury = 0, curx = 0;
   int board[3][3];
   bzero(board, sizeof(board));
