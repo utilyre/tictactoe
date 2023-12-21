@@ -19,12 +19,8 @@ char name(int player) {
 void draw_board(WINDOW *win, int board[3][3], int cury, int curx) {
   for (int i = 0; i < 3; ++i) {
     for (int j = 0; j < 3; ++j) {
-      char cur = ' ';
-      if (i == cury && j == curx) {
-        cur = '*';
-      }
-
-      mvwprintw(win, 2 * i + 1, 4 * j + 2, "%c%c", name(board[i][j]), cur);
+      mvwprintw(win, 2 * i + 1, 4 * j + 2, "%c%c", name(board[i][j]),
+                (i == cury && j == curx) ? '*' : ' ');
     }
   }
 
