@@ -1,12 +1,11 @@
 #include "ncurext.h"
 #include "util.h"
 #include <ncurses.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <strings.h>
 
 int main() {
-  bool turn = false; // NOTE: turn+1 is player number
+  int turn = 1;
   int cury = 0, curx = 0;
   int board[3][3];
   bzero(board, sizeof(board));
@@ -14,13 +13,13 @@ int main() {
   initscr();
   noecho();
   curs_set(0);
-  keypad(stdscr, true);
+  keypad(stdscr, TRUE);
 
   mvprintw(2, (COLS - 11) / 2, "Tic Tac Toe");
   WINDOW *wboard = initwin(7, 13, (LINES - 7) / 2, (COLS - 13) / 2);
 
   while (true) {
-    mvprintw(LINES / 2 - 5, (COLS - 7) / 2, "next: %c", name(turn + 1));
+    mvprintw(LINES / 2 - 5, (COLS - 7) / 2, "next: %c", name(turn));
     draw_board(wboard, board, cury, curx);
 
     int winner = check_winner(board);
@@ -67,8 +66,8 @@ int main() {
       break;
     case ' ':
       if (!board[cury][curx]) {
-        board[cury][curx] = turn + 1;
-        turn = !turn;
+        board[cury][curx] = turn;
+        turn = turn % 2 + 1;
       }
 
       break;
