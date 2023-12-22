@@ -1,12 +1,18 @@
 CC=gcc
-CFLAGS=-Wall -g -I.
+CFLAGS=-I.
 LDLIBS=-lncurses
 
-tictactoe: $(patsubst %.c, %.o, $(wildcard *.c))
-	$(CC) $^ -o $@ $(LDLIBS)
+release: CFLAGS+=-O3
+release: target
+
+debug: CFLAGS+=-Wall -g
+debug: target
+
+clean:
+	rm -f target *.o
+
+target: ncurext.o util.o main.o
+	$(CC) ncurext.o util.o main.o -o target $(LDLIBS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
-clean:
-	rm -f tictactoe *.o
